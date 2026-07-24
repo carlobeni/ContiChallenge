@@ -46,6 +46,40 @@ La API cumple estrictamente con los siguientes requerimientos funcionales y téc
 - **Estándares REST:** Uso adecuado de verbos HTTP (GET, POST) y códigos de estado HTTP semánticos (200 OK, 201 Created, 404 Not Found, 409 Conflict).
 - **Manejo de Errores y Logs:** Manejo centralizado de excepciones y logs descriptivos en la consola, correctamente categorizados por nivel y origen.
 
+## Base de Datos y Validaciones
+
+Las validaciones del sistema se realizan en **dos niveles** para garantizar la integridad y consistencia de los datos:
+
+1. **A nivel de Aplicación (Java):** Usando *Bean Validation* (`@NotNull`, `@Positive`, etc.) en los DTOs de la capa de entrada (ej. `TransferRequestDto`) para interceptar peticiones malformadas de forma temprana.
+2. **A nivel de Base de Datos (SQL):** Mediante restricciones como `CHECK` y `NOT NULL` en las tablas, asegurando una capa de protección adicional y de persistencia estricta.
+
+A continuación se muestra el esquema SQL principal y las validaciones de base de datos (ubicado en `src/main/resources/db/migration/V1__create_tables.sql`):
+
+```sql
+CREATE TABLE accounts (
+    id BIGSERIAL PRIMARY KEY,
+    account_number VARCHAR(50) NOT NULL UNIQUE,
+    owner_name VARCHAR(100) NOT NULL,
+    balance DECIMAL(15, 2) NOT NULL CHECK (balance >= 0),
+    currency VARCHAR(3) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE transfers (
+    id BIGSERIAL PRIMARY KEY,
+    source_account_id BIGINT NOT NULL,
+    destination_account_id BIGINT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL CHECK (amount > 0),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_source_account FOREIGN KEY (source_account_id) REFERENCES accounts(id),
+    CONSTRAINT fk_destination_account FOREIGN KEY (destination_account_id) REFERENCES accounts(id)
+);
+
+CREATE INDEX idx_transfers_source ON transfers(source_account_id);
+CREATE INDEX idx_transfers_destination ON transfers(destination_account_id);
+```
+
 ## Instalación
 
 ### Prerrequisitos
