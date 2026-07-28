@@ -37,6 +37,7 @@
 
 @SETLOCAL
 
+@SET CMD_LINE_ARGS=%*
 @SET ERROR_CODE=0
 
 @REM To isolate internal variables from possible post scripts, we use another setlocal

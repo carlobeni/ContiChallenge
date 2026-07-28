@@ -1,0 +1,19 @@
+# Target directory for Maven builds
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Environment / local files
+*.env
+*.log
+
+# Study Material (Ignored for interviews)
+Guia_Entrevista_Tecnica_ContiChallenge.pdf
+Guia_Entrevista_*.pdf
+*.pdf
