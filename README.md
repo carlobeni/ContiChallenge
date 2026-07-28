@@ -1,5 +1,11 @@
 # ContiChange Bank Transfer API
 
+[![Java CI with Maven](https://github.com/carlobeni/ContiChallenge/actions/workflows/build.yml/badge.svg)](https://github.com/carlobeni/ContiChallenge/actions/workflows/build.yml)
+![Java 21](https://img.shields.io/badge/Java-21-orange?style=flat&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.5-6DB33F?style=flat&logo=springboot)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql)
+![JaCoCo Coverage](https://img.shields.io/badge/JaCoCo_Coverage-Passed-brightgreen)
+
 Esta es una API REST desarrollada para la gestión de transferencias bancarias entre cuentas. El sistema está diseñado siguiendo los principios de **Clean Architecture** y **Domain-Driven Design (DDD)** para una escalabilidad e independencia de frameworks.
 
 ### Entregables Incluidos
